@@ -1,6 +1,3 @@
-# Topic9_3_d.py
-# Purpose: Demonstrate an API integration class using a public REST API.
-
 import requests
 
 

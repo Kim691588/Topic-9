@@ -24,18 +24,14 @@ class WeatherService:
 
             return data.get("current_weather", {}).get("temperature")
 
-        except requests.exceptions.RequestException as error:
-            print(f"API request failed: {error}")
+        except requests.exceptions.RequestException:
             return None
 
 
 service = WeatherService()
 
-# Location 1: Jakarta
-jakarta_temperature = service.get_current_temperature(-6.20, 106.85)
+jakarta = service.get_current_temperature(-6.20, 106.85)
+port_moresby = service.get_current_temperature(-9.4438, 147.1803)
 
-# Location 2: Port Moresby
-port_moresby_temperature = service.get_current_temperature(-9.44, 147.18)
-
-print(f"Jakarta temperature: {jakarta_temperature} degrees Celsius")
-print(f"Port Moresby temperature: {port_moresby_temperature} degrees Celsius")
+print(f"Jakarta temperature: {jakarta} degrees Celsius")
+print(f"Port Moresby temperature: {port_moresby} degrees Celsius")

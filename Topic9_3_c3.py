@@ -4,7 +4,7 @@ import requests
 class WeatherService:
     BASE_URL = "https://api.open-meteo.com/v1/forecast"
 
-    def get_forecast_summary(self, latitude, longitude):
+    def get_current_weather(self, latitude, longitude):
         params = {
             "latitude": latitude,
             "longitude": longitude,
@@ -26,17 +26,26 @@ class WeatherService:
             windspeed = weather.get("windspeed")
 
             if temperature is None or windspeed is None:
-                return "Weather data unavailable"
+                return None
 
-            return f"{temperature}°C, wind {windspeed} km/h"
+            return temperature, windspeed
 
-        except requests.exceptions.RequestException as error:
-            print(f"API request failed: {error}")
+        except requests.exceptions.RequestException:
+            return None
+
+    def get_forecast_summary(self, latitude, longitude):
+        weather = self.get_current_weather(latitude, longitude)
+
+        if weather is None:
             return "Weather data unavailable"
+
+        temperature, windspeed = weather
+
+        return f"{temperature}°C, wind {windspeed} km/h"
 
 
 service = WeatherService()
 
 summary = service.get_forecast_summary(-6.20, 106.85)
 
-print("Weather summary:", summary)
+print(f"Weather summary: {summary}")

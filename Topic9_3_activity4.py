@@ -11,24 +11,19 @@ class WeatherService:
             "current_weather": True
         }
 
-        try:
-            response = requests.get(
-                self.BASE_URL,
-                params=params,
-                timeout=5
-            )
+        response = requests.get(
+            self.BASE_URL,
+            params=params,
+            timeout=5
+        )
 
-            response.raise_for_status()
+        response.raise_for_status()
 
-            data = response.json()
+        data = response.json()
 
-            temperature = data.get("current_weather", {}).get("temperature")
+        temperature = data.get("current_weather", {}).get("temperature")
 
-            return temperature
-
-        except requests.exceptions.RequestException as error:
-            print(f"API request failed: {error}")
-            return None
+        return temperature
 
 
 service = WeatherService()
@@ -36,6 +31,6 @@ service = WeatherService()
 temperature = service.get_current_temperature(-6.20, 106.85)
 
 if temperature is not None:
-    print(f"Temperature: {temperature} degrees Celsius")
+    print(f"Current temperature: {temperature} degrees Celsius")
 else:
-    print("Temperature unavailable")
+    print("Temperature data unavailable")

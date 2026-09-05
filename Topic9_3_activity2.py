@@ -6,6 +6,5 @@ try:
         timeout=3
     )
     print(response.status_code)
-
 except requests.exceptions.RequestException:
     print("Request failed")
